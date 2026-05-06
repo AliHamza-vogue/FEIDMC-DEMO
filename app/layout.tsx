@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
+import DemoModal from "@/components/DemoModal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,26 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         {children}
-      
-import type { Metadata } from "next";
-import "@/app/globals.css";
-import DemoModal from "@/components/DemoModal"; // <-- Import the component
-
-export const metadata: Metadata = {
-  title: "FIEDMC",
-  description: "FIEDMC one window digital solution",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
-        <DemoModal /> {/* <-- Add it right here */}
+        <DemoModal />
       </body>
     </html>
   );
