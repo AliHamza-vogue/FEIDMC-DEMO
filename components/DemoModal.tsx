@@ -2,26 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertCircle, X, ExternalLink } from 'lucide-react';
+import { AlertCircle, X } from 'lucide-react';
 
 export default function DemoModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if the user has already seen the modal in this session
-    const hasSeenModal = sessionStorage.getItem('demo_modal_shown');
-    if (!hasSeenModal) {
-      // Small delay to let the page load nicely
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
+    // Open on every single load/reload without saving state in storage
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 800);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
-    sessionStorage.setItem('demo_modal_shown', 'true');
   };
 
   return (
@@ -42,7 +38,7 @@ export default function DemoModal() {
             initial={{ scale: 0.95, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
-            className="relative bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl border border-slate-100 flex flex-col items-center text-center z-50"
+            className="relative bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 flex flex-col items-center text-center z-50"
           >
             <button
               onClick={handleClose}
@@ -52,42 +48,32 @@ export default function DemoModal() {
             </button>
 
             {/* Icon Banner */}
-            <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6 text-amber-500">
+            <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-5 text-amber-500">
               <AlertCircle className="w-7 h-7" />
             </div>
 
             <h3 className="text-2xl font-bold text-slate-950 mb-3 tracking-tight">
-              Platform Demo Preview
+              Presentation Demo Preview
             </h3>
             
-            <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto mb-8">
-              Welcome to the FIEDMC digital platform demonstration. This interactive preview is designed for evaluation and stakeholder review purposes.
+            <p className="text-slate-500 text-sm leading-relaxed max-w-xs mx-auto mb-6">
+              Welcome to the FIEDMC digital platform demonstration. This interactive preview is designed solely for evaluation and presentation review purposes.
             </p>
 
-            {/* Features summary for presentability */}
-            <div className="w-full bg-slate-50 rounded-2xl p-4 mb-8 text-left border border-slate-100">
-              <div className="space-y-3 text-xs text-slate-600">
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  <span>One-Window Operations & Plot Allocation</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  <span>Secure Customer / Stakeholder Portals</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  <span>Real-time Financial Integration Features</span>
-                </div>
-              </div>
+            {/* Disclaimer for data usage & availability */}
+            <div className="w-full bg-amber-50 text-amber-900/90 rounded-2xl p-4 mb-8 text-left border border-amber-500/20">
+              <p className="text-xs font-medium leading-relaxed">
+                <strong className="block mb-1 text-amber-600 uppercase tracking-wider text-[10px]">Notice of Presentation</strong>
+                This system contains demonstration data and layouts created for viewing purposes only. This demo will remain accessible for a period of 15 days, after which it will be taken down.
+              </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row w-full gap-3">
+            <div className="flex w-full">
               <button
                 onClick={handleClose}
-                className="flex-1 bg-slate-950 hover:bg-slate-900 text-white text-sm font-semibold py-3.5 rounded-xl transition-all"
+                className="flex-1 bg-slate-950 hover:bg-slate-900 text-white text-sm font-semibold py-3.5 rounded-xl transition-all shadow-lg"
               >
-                Access Demo
+                Proceed to Demo
               </button>
             </div>
           </motion.div>
