@@ -1,0 +1,7 @@
+{
+  "name": "FIEDMC Portal",
+  "description": "Industrial Estate Development and Management Portal for FIEDMC Pakistan.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

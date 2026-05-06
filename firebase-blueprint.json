@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile containing basic information and role.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "stakeholder", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email", "role"]
+    },
+    "Estate": {
+      "title": "Industrial Estate",
+      "description": "Detailed information about an industrial estate.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "totalArea": { "type": "string" },
+        "location": { "type": "string" },
+        "stats": { "type": "object" }
+      },
+      "required": ["slug", "name"]
+    },
+    "Plot": {
+      "title": "Plot",
+      "description": "Individual industrial plot within an estate.",
+      "type": "object",
+      "properties": {
+        "plotId": { "type": "string" },
+        "estateId": { "type": "string" },
+        "size": { "type": "string" },
+        "status": { "type": "string", "enum": ["available", "booked", "allotted", "under-development"] },
+        "ownerId": { "type": "string" },
+        "type": { "type": "string" },
+        "price": { "type": "number" }
+      },
+      "required": ["plotId", "estateId", "status"]
+    },
+    "ServiceRequest": {
+      "title": "Service Request",
+      "description": "NOC, Utility connection, or other service requests.",
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string" },
+        "userId": { "type": "string" },
+        "plotId": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "string", "enum": ["submitted", "under-review", "rfi", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "documents": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["userId", "type", "status"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Financial billing records for clients.",
+      "type": "object",
+      "properties": {
+        "invoiceId": { "type": "string" },
+        "userId": { "type": "string" },
+        "plotId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "paid", "overdue"] },
+        "dueDate": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "amount", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Private user profiles."
+    },
+    "/estates/{estateId}": {
+      "schema": "Estate",
+      "description": "Industrial estate details."
+    },
+    "/plots/{plotId}": {
+      "schema": "Plot",
+      "description": "Plot inventory across all estates."
+    },
+    "/serviceRequests/{requestId}": {
+      "schema": "ServiceRequest",
+      "description": "Client service requests (NOCs, etc)."
+    },
+    "/invoices/{invoiceId}": {
+      "schema": "Invoice",
+      "description": "Billing records."
+    }
+  }
+}
